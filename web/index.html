@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LL-Term</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta property="og:url" content="https://ll-term.link/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="LL-Term" />
+    <meta property="og:site_name" content="LL-Term" />
+    <meta property="og:description" content="LL-Termは、ラブライブ！シリーズの「あれって何時までだっけ？」という期間をまとめる、ファン作成の情報サイトです。" />
+    <meta property="og:image" content="https://ll-term.link/img/ogp.png" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@LLTerm_jp">
+    <meta name="author" content="LL-Term" />
+    <link rel="icon" href="./img/favicon.ico">
+    <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="./js/data.js"></script>
+    <script src="./js/easter.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <header>
+        <h1>LL-Term</h1>
+        <span class="subtitle">ラブライブ！シリーズの「あれは何時までだっけ？」を記載するファンサイト</span>
+        <ul>
+            <li>
+                <a class="twi" target="_blank" href="https://twitter.com/LLTerm_jp">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </li>
+        </ul>
+    </header>
+
+    <div class="conditions">
+        <div class="filterTypeSelect">
+            <div v-bind:class="filterType == 1 ? 'itm open' : 'itm'">
+                <input type="radio" v-model="filterType" value="1" id="filterType_1" />
+                <label for="filterType_1">
+                    <span><i class="fas fa-filter"></i> 簡易絞り込み</span>
+                </label>
+            </div>
+            <div class="spce"></div>
+            <div v-bind:class="filterType == 2 ? 'itm open' : 'itm'">
+                <input type="radio" v-model="filterType" value="2" id="filterType_2" />
+                <label for="filterType_2">
+                    <span><i class="fas fa-filter"></i> 詳細絞り込み</span>
+                </label>
+            </div>
+        </div>
+        <div class="filterArea" v-if="filterType == 1">
+            <div class="filter">
+                <select v-model="filterSimple">
+                    <option value="">全て</option>
+                    <option value="live">ライブ、ライブ物販申込</option>
+                    <option value="archive">アーカイブ</option>
+                    <option value="shop">コラボショップ、店舗イベント</option>
+                    <option value="vote">投稿、投票</option>
+                    <option value="other">その他</option>
+                </select>
+            </div>
+        </div>
+        <div class="filterArea" v-if="filterType == 2">
+            <dl>
+                <dt>ステータス</dt>
+                <dd class="sts">
+                    <input type="checkbox" v-model="filterDetail.sts.deadline" id="sts_deadline" />
+                    <label for="sts_deadline">終了間近</label>
+                    <input type="checkbox" v-model="filterDetail.sts.during" id="sts_during" />
+                    <label for="sts_during">開催中</label>
+                    <input type="checkbox" v-model="filterDetail.sts.before" id="sts_before" />
+                    <label for="sts_before">準備中</label>
+                    <input type="checkbox" v-model="filterDetail.sts.finished" id="sts_finished" />
+                    <label for="sts_finished">終了</label>
+                </dd>
+                <dt>プロジェクト</dt>
+                <dd class="prj">
+                    <input type="checkbox" v-model="filterDetail.prj.muji" id="prg_muji" />
+                    <label for="prg_muji">無印</label>
+                    <input type="checkbox" v-model="filterDetail.prj.sunshine" id="prg_sunshine" />
+                    <label for="prg_sunshine">サンシャイン</label>
+                    <input type="checkbox" v-model="filterDetail.prj.niji" id="prg_niji" />
+                    <label for="prg_niji">虹ヶ咲</label>
+                    <input type="checkbox" v-model="filterDetail.prj.superstar" id="prg_superstar" />
+                    <label for="prg_superstar">スーパースター</label>
+                </dd>
+                <dt>種類</dt>
+                <dd>
+                    <input type="checkbox" v-model="filterDetail.tag.live" id="tag_live" />
+                    <label for="tag_live">ライブ、ライブ物販申込</label>
+                    <input type="checkbox" v-model="filterDetail.tag.archive" id="tag_archive" />
+                    <label for="tag_archive">アーカイブ</label>
+                    <input type="checkbox" v-model="filterDetail.tag.shop" id="tag_shop" />
+                    <label for="tag_shop">コラボ、店舗イベント</label>
+                    <input type="checkbox" v-model="filterDetail.tag.vote" id="tag_vote" />
+                    <label for="tag_vote">投稿、投票</label>
+                    <input type="checkbox" v-model="filterDetail.tag.item" id="tag_item" />
+                    <label for="tag_item">商品</label>
+                    <input type="checkbox" v-model="filterDetail.tag.food" id="tag_food" />
+                    <label for="tag_food">ドリンク、フード</label>
+                    <input type="checkbox" v-model="filterDetail.tag.other" id="tag_other" />
+                    <label for="tag_other">その他</label>
+                </dd>
+            </dl>
+            <p v-if="filterDetail.sts.finished">
+                ※期間が終了したデータは定期的に削除され表示されなくなります。ご注意ください。
+            </p>
+        </div>
+    </div>
+
+    <ul class="terms">
+        <li class="term" v-for="(t, idx) of terms" v-if="isShow(t)">
+            <a target="_blank" v-bind:href="t.URL">
+                <div class="date">
+                    <span class="ribon" v-bind:class="t.Label.Cls"><i v-bind:class="t.TypeIconClass"></i> {{ t.Label.Text }}</span>
+                    <span class="limit">&nbsp;{{ getLastDayHours(t) }}</span>
+                </div>
+                <div class="name">
+                    {{ t.Name }}
+                </div>
+                <div class="period">
+                    {{ getFormattedStartDate(t) }} ～ {{ getFormattedEndDate(t) }}
+                </div>
+            </a>
+        </li>
+    </ul>
+    <footer>
+        <div>
+            <div class="wave" id="wave1"></div>
+            <div class="wave" id="wave2"></div>
+            <div class="wave" id="wave3"></div>
+            <div class="wave" id="wave4"></div>
+        </div>
+        <div class="footerText">
+            <div class="sns">
+                <a class="twi" target="_blank" href="https://twitter.com/LLTerm_jp">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+            <div class="updateInfo">
+                {{ update }} 更新
+            </div>
+        </div>
+        <div>
+            {{ geEtMsg() }}
+        </div>
+    </footer>
+</div>
+<script src="./js/main.js"></script>
+</body>
+</html>

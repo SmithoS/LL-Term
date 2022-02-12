@@ -1,0 +1,344 @@
+* {
+    box-sizing: border-box;
+}
+
+#app {
+    min-height: 100vh;
+    position: relative;
+}
+
+
+header {
+    padding: 15px 15px 5px 15px;
+    position: relative;
+    border-bottom: 3px solid #f200b5;
+    box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+}
+header h1 {
+    font-size: 190%;
+    margin: 0;
+    display: inline-block;
+}
+header .subtitle {
+    font-size: 75%;
+    display: inline-block;
+}
+header ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+}
+header ul li {
+    list-style: none;
+    margin-left: 30px;
+}
+header .twi {
+    font-size: 160%;
+    color: rgb(29, 155, 240);
+}
+
+.conditions {
+    margin: 20px 15px 0 15px;
+}
+
+.filterTypeSelect {
+    display: flex;
+    justify-content: space-between;
+}
+.filterTypeSelect .itm {
+    text-align: center;
+    width: 48%;
+    border: 2px solid gray;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: lightgray;
+}
+.filterTypeSelect .itm.open {
+    border-bottom: none;
+    background-color: white;
+}
+.filterTypeSelect .itm input {
+    display: none;
+}
+.filterTypeSelect .itm label {
+    width: 100%;
+    display: inline-block;
+    padding: 10px 0;
+    cursor: pointer;
+}
+.filterTypeSelect .spce {
+    width: 4%;
+    border-bottom: 2px solid gray;
+}
+
+.filterArea {
+    border-left: 2px solid gray;
+    border-right: 2px solid gray;
+    border-bottom: 2px solid gray;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    box-shadow: 2px 2px 4px;
+}
+.filterArea dl {
+    margin: 2px 0;
+}
+.filterArea dt {
+    margin: 10px 0 5px 0;
+}
+.filterArea dd {
+    margin: 0;
+}
+.filterArea input {
+    display: none;
+}
+.filterArea label {
+    border: 1px solid #3586ff;
+    border-radius: 15px;
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.filterArea input:checked + label {
+    background-color: #3586ff;
+    color: white;
+}
+.filterArea .sts label {
+    width: 6.5em;
+}
+.filterArea .prj label {
+    width: 8.7em;
+}
+
+.filter {
+    border: 2px solid #3586ff;
+    border-radius: 50px;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+}
+
+.filter::before {
+    position: absolute;
+    top: 0.9em;
+    right: 1em;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #3586ff;
+    pointer-events: none;
+}
+.filter select {
+    width: 100%;
+    padding: 8px 38px 8px 8px;
+    cursor: pointer;
+    border: none;
+    appearance: none;
+    text-indent: 1px;
+}
+
+.terms {
+    margin: 0;
+    padding: 15px 15px 110px 15px;
+}
+
+.term {
+    list-style: none;
+    margin: 10px 0;
+    border: 2px solid gray;
+    box-shadow: 2px 2px 4px;
+}
+.term a {
+    display: inline-block;
+    width: 100%;
+    min-height: 100px;
+    text-decoration: none;
+    color: #000000;
+}
+
+@media screen and (min-width:800px) {
+    .terms {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .term {
+        margin: 10px;
+        width: calc(50% - 20px);
+    }
+}
+@media screen and (min-width:1600px) {
+    .term {
+        margin: 10px;
+        width: calc(33% - 20px);
+    }
+}
+
+.term a .date {
+    position: relative;
+    padding: 5px 5px 5px 115px;
+    line-height: 30px;
+}
+.term a .date .ribon {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left: -7px;
+    height: 30px;
+    width: 115px;
+    padding-left: 13px;
+}
+.term a .date .ribon::before {
+    position: absolute;
+    content: "";
+    top: 100%;
+    left: 0;
+    border: none;
+    border-bottom: solid 7px transparent;
+    border-right-style: solid;
+    border-right-width: 7px;
+}
+.term a .date .ribon::after {
+    position: absolute;
+    content: "";
+    z-index: 100;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 15px 12px 15px 0px;
+    border-color: transparent #ffffff transparent transparent;
+    border-style: solid;
+}
+
+.term a .date .ribon.before {
+    background: #009200;
+    color: #ffffff;
+}
+.term a .date .ribon.before::before {
+    border-right-color: #006b00;
+}
+.term a .date .ribon.during {
+    background: #7070f8;
+    color: #ffffff;
+}
+.term a .date .ribon.during::before {
+    border-right-color: #4d4da5;
+}
+.term a .date .ribon.deadline {
+    background: #fc4b4b;
+    color: #ffffff;
+}
+.term a .date .ribon.deadline::before {
+    border-right-color: #b43838;
+}
+.term a .date .ribon.finished {
+    background: #7e7e7e;
+    color: #ffffff;
+}
+.term a .date .ribon.finished::before {
+    border-right-color: #3f3f3f;
+}
+.term a .name {
+    padding: 5px 10px;
+    font-size: 150%;
+}
+.term a .period {
+    text-align: right;
+    font-size:75%;
+    color: gray;
+    padding: 5px 10px;
+}
+
+footer {
+    width: 100%;
+    background-color: #3586ff;
+    position: absolute;
+    bottom: 0;
+    height: 60px;
+    color: #ffffff;
+    text-align: right;
+    padding: 0 15px;
+}
+footer .footerText {
+    display: flex;
+    justify-content: space-between;
+}
+footer .sns a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 140%;
+}
+/*
+footer .sns {
+    position: absolute;
+    left: 15px;
+    top: 0px;
+}
+footer .updateInfo {
+    position: absolute;
+    right: 15px;
+    top: 0px;
+}
+*/
+footer .wave {
+    position: absolute;
+    top: -35px;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background: url("../img/wave.png");
+    background-size: 500px 35px;
+}
+footer .wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animatieWave 15s linear infinite;
+}
+footer .wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animatieWave2 15s linear infinite;
+}
+footer .wave#wave3 {
+    z-index: 999;
+    opacity: 0.2;
+    bottom: 20px;
+    animation: animatieWave 10s linear infinite;
+}
+footer .wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 15px;
+    animation: animatieWave2 10s linear infinite;
+}
+@keyframes animatieWave {
+    0%
+    {
+        background-position-x: 500px;
+    }
+    100%
+    {
+        background-position-x: 0px;
+    }
+}
+@keyframes animatieWave2 {
+    0%
+    {
+        background-position-x: 0px;
+    }
+    100%
+    {
+        background-position-x: 500px;
+    }
+}
